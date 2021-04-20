@@ -206,8 +206,8 @@ def clean_non_existing_packs(index_folder_path: str, private_packs: list, storag
         bool: whether cleanup was skipped or not.
     """
     if ('CI' not in os.environ) or (
-            os.environ.get('CIRCLE_BRANCH') != 'master' and storage_bucket.name == GCPConfig.PRODUCTION_BUCKET) or (
-            os.environ.get('CIRCLE_BRANCH') == 'master' and storage_bucket.name not in
+            os.environ.get('CI_COMMIT_BRANCH') != 'master' and storage_bucket.name == GCPConfig.PRODUCTION_BUCKET) or (
+            os.environ.get('CI_COMMIT_BRANCH') == 'master' and storage_bucket.name not in
             (GCPConfig.PRODUCTION_BUCKET, GCPConfig.CI_BUILD_BUCKET)):
         logging.info("Skipping cleanup of packs in gcs.")  # skipping execution of cleanup in gcs bucket
         return True
@@ -740,7 +740,7 @@ Total number of packs: {len(successful_packs + skipped_packs + failed_packs)}
             sys.exit(1)
 
     # for external pull requests -  when there is no failed packs, add the build summary to the pull request
-    branch_name = os.environ.get('CIRCLE_BRANCH')
+    branch_name = os.environ.get('CI_COMMIT_BRANCH')
     if branch_name and branch_name.startswith('pull/'):
         successful_packs_table = build_summary_table_md(successful_packs)
 
