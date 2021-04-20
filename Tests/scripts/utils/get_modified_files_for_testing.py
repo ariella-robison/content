@@ -14,13 +14,6 @@ from Tests.scripts.utils.collect_helpers import (
 from demisto_sdk.commands.common import tools
 
 
-class FileType(constants.FileType, Enum):
-    CONF_JSON = "confjson"
-    METADATA = "metadata"
-    WHITE_LIST = 'whitelist'
-    LANDING_PAGE_SECTIONS_JSON = 'landingPage_sections.json'
-
-
 class ModifiedFiles:
     def __init__(self,
                  modified_files: list,
